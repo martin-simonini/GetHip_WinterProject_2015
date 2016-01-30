@@ -6,8 +6,10 @@ import com.sun.jersey.api.core.PackagesResourceConfig;
 import com.sun.jersey.api.core.ResourceConfig;
 import org.glassfish.grizzly.http.server.HttpServer;
 
-import com.gallup.gethip.DataSourceManager;
-import com.gallup.gethip.model.Employee;
+import GETHIP.winter_project.DataSourceManager;
+import GETHIP.winter_project.models.Users;
+import GETHIP.winter_project.models.Event;
+import GETHIP.winter_project.models.Times;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.sun.jersey.api.container.grizzly2.GrizzlyServerFactory;
@@ -38,7 +40,9 @@ public class Main {
 	
 	private static void buildDaos(){
 		try {
-			DataSourceManager.addDao(); //insert class that i will model
+			DataSourceManager.addDao(Users.class);
+			DataSourceManager.addDao(Event.class);
+			DataSourceManager.addDao(Times.class);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -75,7 +79,7 @@ public class Main {
         System.out.println(String.format("Jersey app started with WADL available at "
                 + "%sapplication.wadl\nHit enter to stop it...",
                 BASE_URI));
-        createDatabaseConnetion();
+        createDataBaseConnecetion();
         buildDaos();
         System.in.read();
         httpServer.stop();
